@@ -1,15 +1,20 @@
+
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Clone Repo') {
             steps {
-                echo 'Cloning repo...'
                 git branch: 'main', url: 'https://github.com/Kandregulakishore/CICDPIPELINE.git'
             }
         }
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                echo 'Build stage - success ✅'
+                sh 'pip3 install -r requirements.txt || echo "No requirements.txt found"'
+            }
+        }
+        stage('Run App') {
+            steps {
+                sh 'python3 app.py || echo "No app.py found"'
             }
         }
     }
